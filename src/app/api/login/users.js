@@ -3,9 +3,9 @@
 export const users = [
   {
     id: 1,
-    name: 'John Doe',
-    password: 'admin',
-    email: 'admin@materio.com',
-    image: '/images/avatars/1.png'
-  }
-]
+    name: "John Doe",
+    password: "admin",
+    email: "admin@gmail.com",
+    image: "/images/avatars/1.png",
+  },
+];

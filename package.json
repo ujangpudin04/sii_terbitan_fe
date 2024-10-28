@@ -1,5 +1,5 @@
 {
-  "name": "materio-mui-nextjs-admin-template",
+  "name": "sii_terbitan",
   "version": "4.1.0",
   "license": "Commercial",
   "private": true,
@@ -76,7 +76,8 @@
     "react-use": "17.5.1",
     "recharts": "2.12.7",
     "server-only": "0.0.1",
-    "valibot": "0.36.0"
+    "valibot": "0.36.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@iconify/json": "2.2.230",
