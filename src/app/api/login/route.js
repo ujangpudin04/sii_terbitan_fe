@@ -47,15 +47,23 @@ import { users } from "./users";
 export async function POST(req) {
   // Vars
   const { email, password } = await req.json();
-  const user = users.find((u) => u.email === email && u.password === password);
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+  const user = await res.json();
+
+  console.log("data", user);
+
+  // const user = users.find((u) => u.email === email && u.password === password);
   let response = null;
 
   if (user) {
-    const { password: _, ...filteredUserData } = user;
-
-    response = {
-      ...filteredUserData,
-    };
+    response = user;
 
     return NextResponse.json(response);
   } else {
