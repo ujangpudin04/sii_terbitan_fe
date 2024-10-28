@@ -1,25 +1,6 @@
 export const db = {
   courses: [
     {
-      id: 1,
-      user: 'Lauretta Coie',
-      image: '/images/avatars/1.png',
-      tutorImg: '/images/apps/academy/1.png',
-      completedTasks: 19,
-      totalTasks: 25,
-      userCount: 18,
-      note: 20,
-      view: 83,
-      time: '17h 34m',
-      logo: 'ri-angularjs-line',
-      color: 'error',
-      courseTitle: 'Basics of Angular',
-      desc: 'Introductory course for Angular and framework basics with TypeScript',
-      tags: 'Web',
-      rating: 4.4,
-      ratingCount: 8
-    },
-    {
       id: 2,
       user: 'Maybelle Zmitrovich',
       tutorImg: '/images/apps/academy/2.png',
