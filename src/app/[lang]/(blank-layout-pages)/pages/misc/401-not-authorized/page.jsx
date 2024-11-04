@@ -1,14 +1,14 @@
 // Component Imports
-import NotAuthorized from '@views/NotAuthorized'
+import NotAuthorized from "@views/NotAuthorized";
 
 // Server Action Imports
-import { getServerMode } from '@core/utils/serverHelpers'
+import { getServerMode } from "@core/utils/serverHelpers";
 
 const Error401 = () => {
   // Vars
-  const mode = getServerMode()
+  const mode = getServerMode();
 
-  return <NotAuthorized mode={mode} />
-}
+  return <NotAuthorized mode={mode} />;
+};
 
-export default Error401
+export default Error401;

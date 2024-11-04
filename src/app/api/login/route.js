@@ -1,81 +1,70 @@
-// // Next Imports
-// import { NextResponse } from "next/server";
-
-// // // Mock data for demo purpose
-// // import { users } from './users'
-
-// export async function POST(req) {
-//   // Vars
-//   const { email, password } = await req.json();
-//   // const user = users.find(u => u.email === email && u.password === password)
-
-//   console.log("data----------", email, password);
-
-//   const data = await fetch
-
-//   let response = null;
-
-//   if (user) {
-//     const { password: _, ...filteredUserData } = user;
-
-//     response = {
-//       ...filteredUserData,
-//     };
-
-//     return NextResponse.json(response);
-//   } else {
-//     // We return 401 status code and error message if user is not found
-//     return NextResponse.json(
-//       {
-//         // We create object here to separate each error message for each field in case of multiple errors
-//         message: ["Email or Password is invalid"],
-//       },
-//       {
-//         status: 401,
-//         statusText: "Unauthorized Access",
-//       }
-//     );
-//   }
-// }
-
 // Next Imports
 import { NextResponse } from "next/server";
 
-// Mock data for demo purpose
-import { users } from "./users";
-
 export async function POST(req) {
   // Vars
-  const { email, password } = await req.json();
+  try {
+    const request = await req.json();
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
-  });
-  const user = await res.json();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(request),
+    });
+    const data = await res.json();
 
-  console.log("data", user);
+    console.log(data);
 
-  // const user = users.find((u) => u.email === email && u.password === password);
-  let response = null;
+    if (data?.data?.responseCode === 200) {
+      return NextResponse.json(data);
+    }
 
-  if (user) {
-    response = user;
+    if (data?.data?.responseCode == 400) {
+      return NextResponse.json(
+        {
+          message: [data?.data?.message],
+        },
+        {
+          status: 400,
+          statusText: "Error Request",
+        }
+      );
+    }
 
-    return NextResponse.json(response);
-  } else {
-    // We return 401 status code and error message if user is not found
+    if (data?.data?.responseCode == 401) {
+      return NextResponse.json(
+        {
+          message: [data?.data?.message],
+        },
+        {
+          status: 401,
+          statusText: "Unauthorized Access",
+        }
+      );
+    }
+
+    if (data?.data?.responseCode == 500) {
+      return NextResponse.json(
+        {
+          message: [data?.data?.message],
+        },
+        {
+          status: 500,
+          statusText: "Internal Server Error",
+        }
+      );
+    }
+  } catch (error) {
     return NextResponse.json(
       {
-        // We create object here to separate each error message for each field in case of multiple errors
-        message: ["Email or Password is invalid"],
+        message: ["Service Unavailable"],
       },
       {
-        status: 401,
-        statusText: "Unauthorized Access",
+        status: 503,
+        statusText: "Service Unavailable",
       }
     );
   }

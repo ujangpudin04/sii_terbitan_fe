@@ -33,11 +33,15 @@ import { getLocalizedUrl } from "@/utils/i18n";
 import { useFormState } from "react-dom";
 import { signUpCredentials } from "@/libs/actions";
 import { RegisterButton } from "@/libs/button";
+import { Alert, Autocomplete } from "@mui/material";
+import { gender } from "@/data/static";
 
 const RegisterV2 = ({ mode }) => {
   // States
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
+  const [value, setValue] = useState(null);
+  const [inputValue, setInputValue] = useState("");
   const [state, formAction] = useFormState(signUpCredentials, null);
 
   // Vars
@@ -106,12 +110,11 @@ const RegisterV2 = ({ mode }) => {
             </Typography>
           </div>
           {state?.message ? (
-            <div
-              className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100"
-              role="alert"
-            >
-              <span className="font-medium">{state?.message}</span>
-            </div>
+            <Alert icon={false} className="bg-red-100">
+              <Typography variant="body2" color="red">
+                Message: <span className="font-medium">{state?.message}</span>
+              </Typography>
+            </Alert>
           ) : null}
           <form
             noValidate
@@ -122,10 +125,10 @@ const RegisterV2 = ({ mode }) => {
             <TextField
               autoFocus
               fullWidth
-              label="Username"
-              name="username"
-              error={state?.error?.username}
-              helperText={state?.error?.username}
+              label="Fullname"
+              name="full_name"
+              error={state?.error?.full_name}
+              helperText={state?.error?.full_name}
             />
             <TextField
               fullWidth
@@ -188,6 +191,33 @@ const RegisterV2 = ({ mode }) => {
                 ),
               }}
             />
+
+            <Autocomplete
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+              inputValue={inputValue}
+              onInputChange={(event, newInputValue) => {
+                setInputValue(newInputValue);
+              }}
+              id="gender"
+              options={gender}
+              getOptionLabel={(option) => option.label}
+              isOptionEqualToValue={(options, value) =>
+                options.value === value?.value
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  name="gender"
+                  label="Gender"
+                  error={!!state?.error?.gender}
+                  helperText={state?.error?.gender}
+                />
+              )}
+            />
+
             <div className="flex justify-between items-center gap-3">
               <FormControlLabel
                 control={<Checkbox />}

@@ -12,3 +12,13 @@ export const RegisterButton = () => {
     </Button>
   );
 };
+
+export const LoginButton = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button fullWidth variant="contained" type="submit" disabled={pending}>
+      {pending ? "Authenticating..." : "Sign In"}
+    </Button>
+  );
+};
